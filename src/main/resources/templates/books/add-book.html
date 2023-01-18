@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Додади книга</title>
+
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+  <script src="/assets/vendor/popper.min.js"></script>
+  <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">Logo</a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" th:if="${user.role == T(com.example.bookthebook.model.enumeration.Role).ADMIN}" th:href="@{/users}">Корисници</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:if="${user.role == T(com.example.bookthebook.model.enumeration.Role).STUDENT}" th:href="@{/users/{id}(id=${user.id})}">Корисник</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:if="${user.role == T(com.example.bookthebook.model.enumeration.Role).ADMIN}" th:href="@{/rentals}">Изнајмувања</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" th:href="@{/books}">Книги</a>
+    </li>
+  </ul>
+
+  <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="get">
+    <button class="btn btn-primary my-2 my-sm-0" type="submit">Одјави се!</button>
+  </form>
+</nav>
+
+<div class="container">
+  <div class="mt-5 mb-3">
+    <h3>Додади нова книга: </h3>
+  </div>
+  <form action="/books"
+      method="post"
+      enctype="multipart/form-data"
+      th:object="${book}">
+
+  <input type="text" hidden="hidden" name="id" th:value="${book.getId()}">
+
+  <label for="title">Име на книгата:</label><br>
+  <input type="text"
+         class="form-control"
+         th:value="${book.getTitle()}"
+         id="title"
+         name="title"
+         th:field="*{title}"
+         required
+         placeholder="Enter book title">
+
+  <label for="author">Автор:</label><br>
+  <input type="text"
+         class="form-control"
+         th:value="${book.getAuthor()}"
+         id="author"
+         name="author"
+         th:field="*{author}"
+         required
+         placeholder="Enter book author">
+
+  <label for="quantity">Количина</label>
+  <input type="text"
+         class="form-control"
+         th:value="${book.getQuantity()}"
+         id="quantity"
+         th:field="*{quantity}"
+         name="quantity"
+         placeholder="Quantity">
+
+  <label for="page">Број на страни: </label>
+  <input type="text"
+         class="form-control"
+         th:value="${book.getPage()}"
+         id="page"
+         th:field="*{page}"
+         name="page"
+         placeholder="Page">
+
+
+  <label for="description">Опис: </label>
+  <input type="text"
+         class="form-control"
+         th:value="${book.getDescription()}"
+         id="description"
+         th:field="*{description}"
+         name="description"
+         placeholder="Description">
+
+  <button type="submit" class="btn btn-primary">Креирај!</button>
+  <a type="button" class="btn btn-primary" href="/books">Назад</a>
+
+</form>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rentals</title>
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+  <script src="/assets/vendor/popper.min.js"></script>
+  <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">Logo</a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" th:if="${user.role == T(com.example.bookthebook.model.enumeration.Role).ADMIN}" th:href="@{/users}">Корисници</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:if="${user.role == T(com.example.bookthebook.model.enumeration.Role).STUDENT}" th:href="@{/users/{id}(id=${user.id})}">Корисник</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" th:if="${user.role == T(com.example.bookthebook.model.enumeration.Role).ADMIN}" th:href="@{/rentals}">Изнајмувања</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/books}">Книги</a>
+    </li>
+  </ul>
+
+  <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="get">
+    <button class="btn btn-primary my-2 my-sm-0" type="submit">Одјави се!</button>
+  </form>
+</nav>
+
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1>Страна за изнајмување</h1>
+    <p>Овој поглед ги листа сите изнајмувања направени од сите корисници. Притоа го прикажува и статусот на изнајмувањето, изнајмените дати (од кога до кога), но доколку статусот на изнајмувањето е PENDING, тогаш датата не се прикажува бидејќи сеуште не е отпочнато изнајмувањето
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <table class="table">
+  <tr>
+    <th>Код</th>
+    <th>Почетна дата</th>
+    <th>Крајна дата</th>
+    <th>Наслов на книга</th>
+    <th>Корисничко име</th>
+    <th>Статус на изнајмување</th>
+    <th>Промени</th>
+  </tr>
+  <tr th:each="rental : ${rentals}">
+    <td th:text="${rental.id}"></td>
+    <td th:text="${rental.startDate}"></td>
+    <td th:text="${rental.endDate}"></td>
+    <td th:text="${rental.getBook().getTitle()}"></td>
+    <td th:text="${rental.getUser().getFirstName()}"></td>
+    <td th:text="${rental.bookStatus}"></td>
+    <td><a class="btn-sm btn btn-outline-dark" th:href="@{/rentals/{id}/(id=${rental.id})}">Промени</a></td>
+
+  </tr>
+</table>
+</div>
+<br><br><br>
+
+
+
+</body>
+</html>

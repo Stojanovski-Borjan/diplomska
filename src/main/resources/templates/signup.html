@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Најави се</title>
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/bootstrap.min.css">
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="/assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+  <script src="/assets/vendor/popper.min.js"></script>
+  <script src="/assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+</head>
+<body style="background-color: #f4f8fc">
+<div class="container pt-5">
+  <form action="/signup"
+        method="post"
+        enctype="multipart/form-data"
+        th:object="${user}"
+        class="pt-5">
+    <h2 class="form-signin-heading pt-5">Регистрирај се!</h2>
+
+    <div class="form-group">
+    <label for="firstName">Име:</label><br>
+    <input type="text"
+           class="form-control"
+           th:value="${user.getFirstName()}"
+           id="firstName"
+           name="firstName"
+           th:field="*{firstName}"
+           required
+           placeholder="Enter First Name">
+    </div>
+
+    <div class="form-group">
+    <label for="lastName">Презиме:</label><br>
+    <input type="text"
+           class="form-control"
+           th:value="${user.getLastName()}"
+           id="lastName"
+           name="lastName"
+           th:field="*{lastName}"
+           required
+           placeholder="Enter Last Name">
+    </div>
+
+    <div class="form-group">
+    <label for="email">Е-маил: </label>
+    <input type="text"
+           class="form-control"
+           th:value="${user.getEmail()}"
+           id="email"
+           th:field="*{email}"
+           name="email"
+           placeholder="email">
+    </div>
+
+    <div class="form-group">
+    <label for="password">Лозинка: </label>
+    <input type="password"
+           class="form-control"
+           th:value="${user.getPassword()}"
+           id="password"
+           th:field="*{password}"
+           name="password"
+           placeholder="Password">
+    </div>
+
+    <button type="submit" class="btn btn-block btn-primary">Пријави се!</button>
+    <br>
+    <a href="/login" class="btn btn-block btn-outline-dark">Имаш корисничка сметка, стисни тука!</a>
+
+  </form>
+</div>
+</body>
+</html>
